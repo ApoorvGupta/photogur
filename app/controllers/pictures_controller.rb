@@ -2,7 +2,7 @@ class PicturesController < ApplicationController
 
 	
 	def show
-		@pictures = Picture.find(params[:id])
+		@picture = Picture.find(params[:id])
 
 	end 
 
@@ -11,12 +11,18 @@ class PicturesController < ApplicationController
 	end 
 
 	def new 
+		@picture = Picture.new
 
 	end 
 
 	def create
 
-		 render :text => "Saving a picture. URL: #{params[:url]}, Title: #{params[:title]}, Artist: #{params[:artist]}"
+		@picture = Picture.new(params[:picture])
+		if @picture.save
+			redirect_to pictures_url 
+		else 
+			render :new 
+		end 
 
 	end 
 
